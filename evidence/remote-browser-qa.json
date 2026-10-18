@@ -1,0 +1,85 @@
+{
+  "url": "https://ndshuge.github.io/shuge-little-universe/",
+  "date": "2026-10-18T15:21:39.731Z",
+  "passed": 19,
+  "failed": 0,
+  "results": [
+    {
+      "name": "1440 HTTP 200",
+      "pass": true
+    },
+    {
+      "name": "1440 scene initializing",
+      "pass": true
+    },
+    {
+      "name": "1440 canvas drawn",
+      "pass": true
+    },
+    {
+      "name": "1440 navigation #contact",
+      "pass": true
+    },
+    {
+      "name": "1440 navigation #work",
+      "pass": true
+    },
+    {
+      "name": "1440 navigation #lab",
+      "pass": true
+    },
+    {
+      "name": "1440 navigation #campus",
+      "pass": true
+    },
+    {
+      "name": "1440 navigation #life",
+      "pass": true
+    },
+    {
+      "name": "1440 classic route",
+      "pass": true
+    },
+    {
+      "name": "390 HTTP 200",
+      "pass": true
+    },
+    {
+      "name": "390 scene initializing",
+      "pass": true
+    },
+    {
+      "name": "390 canvas drawn",
+      "pass": true
+    },
+    {
+      "name": "390 navigation #contact",
+      "pass": true
+    },
+    {
+      "name": "390 navigation #work",
+      "pass": true
+    },
+    {
+      "name": "390 navigation #lab",
+      "pass": true
+    },
+    {
+      "name": "390 navigation #campus",
+      "pass": true
+    },
+    {
+      "name": "390 navigation #life",
+      "pass": true
+    },
+    {
+      "name": "390 classic route",
+      "pass": true
+    },
+    {
+      "name": "No JavaScript console exceptions",
+      "pass": true
+    }
+  ],
+  "notes": "Headless Edge on Windows; not a real-touch-device test. Screenshots taken after WebGL readiness."
+}

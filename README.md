@@ -13,7 +13,8 @@
 - `npm run check`：语法检查。
 - `npm run check:scene`：真实 Three.js 几何构造和控件的 CPU 验收；不代表 GPU 验收。
 - 启动服务后 `npm run check:http`：静态资源及 HTTP 验收。支持 `TEST_BASE_URL` 指定地址。
-- 浏览器实测：桌面 1440×900、移动端 390×844 已获得 Edge headless 截图，见 `evidence/`。这不能替代真机触摸测试。
+- 线上浏览器实测：Windows Edge + Playwright，在真实 WebGL 初始化后校验桌面 1440×900、移动端 390×844 的画布、5 个内容导航及旧版入口，共 19/19 通过。截图和结构化结果见 `evidence/live-ready-*.png` 及 `evidence/remote-browser-qa.json`。这不能替代真机触摸测试。
+- 可选本机复验：设置 `PLAYWRIGHT_MODULE_PATH` 为已安装的 Playwright 模块目录，再执行 `node scripts/check-browser.cjs`；可用 `BASE_URL` 自定义目标站点。无需为生产运行安装 Playwright。
 
 ## 架构
 
