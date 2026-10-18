@@ -1,0 +1,22 @@
+/* CPU scene-construction smoke test, using actual Three classes and a renderer stub.
+   No browser is launched. This cannot validate WebGL, pixels or real pointer input. */
+import * as Three from '../dist/vendor/three.module.js';
+import fs from 'node:fs';
+import vm from 'node:vm';
+import assert from 'node:assert/strict';
+const elements=new Map(),events=new Map();let callback,renderedScene,camera,renderCount=0;
+function element(id){if(elements.has(id))return elements.get(id);const e={id,dataset:{},hidden:false,clientWidth:1195,clientHeight:900,textContent:'',style:{},handlers:{},classList:{add(){},remove(){},contains(){return false},toggle(){}},setAttribute(k,v){this[k]=String(v)},append(){},replaceChildren(){},focus(){},setPointerCapture(){},addEventListener(k,fn){this.handlers[k]=fn},getBoundingClientRect(){return {left:245,top:0,width:1195,height:900}}};elements.set(id,e);return e;}
+class RendererStub{constructor(){this.shadowMap={};this.domElement=element('canvas');this.info={render:{calls:0,triangles:0}};}setPixelRatio(){}setClearColor(){}setSize(){}dispose(){}render(s,c){renderCount++;renderedScene=s;camera=c;s.updateMatrixWorld();c.updateMatrixWorld();}}
+const context={THREE:{...Three,WebGLRenderer:RendererStub},document:{querySelector:s=>element(s),querySelectorAll:()=>[],body:{dataset:{motion:'running'},classList:{contains:()=>false}},hidden:false},window:{addEventListener:(k,fn)=>events.set(k,fn),dispatchEvent:e=>events.get(e.type)?.(e)},location:{hash:''},matchMedia:()=>({matches:false}),devicePixelRatio:1,innerWidth:1440,innerHeight:900,ResizeObserver:class{constructor(fn){this.fn=fn}observe(){this.fn()}},requestAnimationFrame:fn=>callback=fn,setTimeout,performance,Event,console};
+const source=fs.readFileSync(new URL('../dist/town.js',import.meta.url),'utf8').replace(/^import[^\n]+\n/,'');vm.runInNewContext(source,context,{filename:'town.js'});
+assert.equal(element('#scene').dataset.ready,'true','Scene construction must finish');
+let t=100;function frames(n=25){for(let i=0;i<n;i++){t+=16.7;callback(t);}}
+frames();let meshCount=0,vertices=0;renderedScene.traverse(o=>{if(o.isMesh){meshCount++;const p=o.geometry.attributes.position;if(p){vertices+=p.count;for(const n of p.array)assert(Number.isFinite(n),'Geometry must have finite vertices');}assert(o.matrixWorld.elements.every(Number.isFinite),'World transform must be finite');}});
+assert(meshCount>100);assert(vertices<250000,'Scene vertex budget exceeded');
+const initial=+element('#scene').dataset.distance;element('#zoom-in').handlers.click();frames(60);assert(+element('#scene').dataset.distance<initial-.8,'Zoom control must change camera distance');
+element('#reset-view').handlers.click();frames(60);assert(Math.abs(+element('#scene').dataset.distance-12)<.02,'Reset must restore camera distance');
+const rotation=+element('#scene').dataset.rotation;element('#scene').handlers.keydown({key:'ArrowRight',preventDefault(){}});frames(60);assert(+element('#scene').dataset.rotation>rotation+.15,'Keyboard rotation must move world');
+events.get('shuge:time')({detail:{day:true}});assert.equal(element('#scene').dataset.time,'day');events.get('shuge:motion')({detail:{paused:true}});assert.equal(element('#scene').dataset.paused,'true');frames(120);const stableRenders=renderCount;frames(60);assert.equal(renderCount,stableRenders,'Paused stable scene must stop rendering');events.get('shuge:time')({detail:{day:false}});frames(1);assert.equal(renderCount,stableRenders+1,'Light changes must redraw a paused scene');
+let fallbackNotified=false;events.set('shuge:scene-error',()=>fallbackNotified=true);vm.runInNewContext(source,{...context,THREE:{...Three,WebGLRenderer:class{constructor(){throw Error('Unsupported WebGL')}}}},{filename:'town-fallback-test.js'});assert.equal(element('#scene').dataset.ready,'fallback');assert.equal(fallbackNotified,true);assert.equal(element('#scene-loading').hidden,true);
+const result={scope:'CPU only: actual Three scene geometry and controls with a stub renderer. No GPU/browser/visual acceptance.',passed:10,failed:0,meshCount,vertices,checks:['Scene initializes','Finite geometry and transforms','Geometry budget','Zoom changes distance','Reset restores distance','Keyboard rotates world','Day and pause events accepted','Paused stable scene stops rendering','Light changes redraw paused scene','Unsupported WebGL announces readable fallback']};
+fs.writeFileSync(new URL('../evidence/planet-scene-cpu.json',import.meta.url),JSON.stringify(result,null,2));console.log(JSON.stringify(result,null,2));

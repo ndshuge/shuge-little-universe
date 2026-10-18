@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f4f4ef">
+  <meta name="description" content="我是鼠哥，蒋松锡。在 AI、交互与科学之间探索，把好奇心做成能打开、能操作、能探索的作品。">
+  <meta property="og:title" content="鼠哥 SHUGE · 好奇不息，创造不停">
+  <meta property="og:description" content="AI 工具、互动学习、浏览器游戏。探索鼠哥的作品与创意实验。">
+  <meta property="og:type" content="website">
+  <title>鼠哥 SHUGE · 好奇不息，创造不停</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+  <script defer src="content.js"></script>
+  <script defer src="app.js"></script>
+</head>
+<body>
+  <a class="skip" href="#main">跳到主要内容</a>
+  <header class="header wrap">
+    <a class="wordmark" href="#" aria-label="鼠哥 SHUGE 首页">SHUGE<span class="brand-mark" aria-hidden="true">*</span><span class="brand-cn">鼠哥</span></a>
+    <nav class="nav" aria-label="主导航">
+      <a href="#work">作品</a><a href="#playground">实验</a><a href="#about">关于</a>
+    </nav>
+    <a class="header-cta" href="#contact">打个招呼 <span aria-hidden="true">↗</span></a>
+  </header>
+  <main id="main">
+    <section class="hero wrap" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <p class="intro"><span class="short-line" aria-hidden="true"></span> 你好，我是鼠哥。</p>
+        <h1 id="hero-title">STAY<br><span class="curious">CURIOUS<span class="period">.</span></span></h1>
+        <div class="hero-bottom">
+          <p class="hero-chinese">好奇不息，<br>创造不停。</p>
+          <div><p class="hero-desc">在 AI、交互与科学之间探索。<br>把脑海里的「如果」，做成屏幕上的「可以」。</p><a class="text-link" href="#work">探索我的作品 <span aria-hidden="true">↘</span></a></div>
+        </div>
+      </div>
+      <div class="sculpture" id="sculpture">
+        <div class="art-top"><span>一场关于好奇心的形态实验</span><button class="quiet-button" id="motion-toggle" aria-pressed="false">暂停动画 <span aria-hidden="true">Ⅱ</span></button></div>
+        <canvas id="hero-canvas" tabindex="0" role="img" aria-label="可旋转的粒子雕塑。拖动或使用方向键旋转，点击下方按钮切换形态。" aria-describedby="art-help">粒子雕塑：由无数个点组成的环、结与小鼠。请用下方按钮切换形态。</canvas>
+        <div class="art-footer"><span id="art-help">拖动，换个角度看。</span><div class="shape-controls" role="group" aria-label="粒子形态"><button data-shape="ring" aria-pressed="true">环</button><button data-shape="knot" aria-pressed="false">结</button><button data-shape="mouse" aria-pressed="false">鼠</button></div></div>
+        <p class="sr-only" id="shape-announcement" aria-live="polite">当前形态：环</p>
+      </div>
+    </section>
+    <section class="work-section wrap" id="work" aria-labelledby="work-title">
+      <div class="section-head"><h2 id="work-title">把好奇心，<br>写成作品<span class="orange">。</span></h2><p>一些认真做的东西。<br>可以学习，可以玩，也可以接着折腾。</p></div>
+      <div class="filters" role="group" aria-label="筛选作品"><button data-filter="all" aria-pressed="true">全部作品 <span>06</span></button><button data-filter="ai" aria-pressed="false">AI 与工具</button><button data-filter="learn" aria-pressed="false">互动学习</button><button data-filter="play" aria-pressed="false">游戏与艺术</button></div>
+      <p class="sr-only" id="filter-status" aria-live="polite">显示 6 个作品</p>
+      <div class="projects" id="projects">
+        <article class="project project-wide" data-category="ai" data-project="micehole">
+          <button class="project-visual micehole-art" data-open="micehole" aria-label="查看 MiceHole 项目详情"><span class="bridge-word">MiceHole<span class="orange">↗</span></span><span class="bridge-sub">从一句话，到真正执行。</span><span class="bridge-flow"><span>ChatGPT</span><i aria-hidden="true">→</i><span class="bridge-mcp">MCP</span><i aria-hidden="true">→</i><span>Windows</span></span><span class="bridge-bottom"><span>READ / BUILD / VERIFY</span><span>自托管工具桥</span></span></button>
+          <div class="project-info"><div><p class="project-type">AI ENGINEERING / 开源工具</p><h3><button data-open="micehole">MiceHole <span aria-hidden="true">↗</span></button></h3><p>让对话连接本机，读写文件、运行命令、验证工程。</p></div><span class="project-index">01</span></div>
+        </article>
+        <article class="project project-narrow" data-category="learn" data-project="academy">
+          <button class="project-visual academy-art" data-open="academy" aria-label="查看鼠哥学院项目详情"><img src="assets/academy.png" alt="鼠哥学院真实网页截图" loading="lazy" onerror="this.hidden=true"><span class="art-fallback" aria-hidden="true"><span class="academy-math">∫</span><span>鼠哥学院</span><small>把知识变成可以探索的世界</small></span></button>
+          <div class="project-info"><div><p class="project-type">LEARNING / 互动知识</p><h3><button data-open="academy">鼠哥学院 <span aria-hidden="true">↗</span></button></h3><p>微积分、编程、芯片与物理，动手理解。</p></div><span class="project-index">02</span></div>
+        </article>
+        <article class="project project-narrow" data-category="play" data-project="arcade">
+          <button class="project-visual arcade-art" data-open="arcade" aria-label="查看鼠哥游戏厅项目详情"><img src="assets/arcade.png" alt="鼠哥游戏厅真实网页截图" loading="lazy" onerror="this.hidden=true"><span class="art-fallback" aria-hidden="true"><span class="pixel-word">PLAY<span class="orange">!</span></span><small>鼠哥游戏厅 / 浏览器里的游乐场</small></span></button>
+          <div class="project-info"><div><p class="project-type">PLAY / 浏览器游戏</p><h3><button data-open="arcade">鼠哥游戏厅 <span aria-hidden="true">↗</span></button></h3><p>像素生存、物理沙盒与动作实验，点开就玩。</p></div><span class="project-index">03</span></div>
+        </article>
+        <article class="project project-wide" data-category="ai" data-project="classnote">
+          <button class="project-visual notes-art" data-open="classnote" aria-label="查看课堂总结项目详情"><img src="assets/classnote.png" alt="课堂总结真实网页截图" loading="lazy" onerror="this.hidden=true"><span class="art-fallback" aria-hidden="true"><span class="notes-heading">杂乱的课堂，<br>清晰的笔记。</span><small>CLASSNOTE / 课堂总结</small></span></button>
+          <div class="project-info"><div><p class="project-type">UTILITY / 学习工具</p><h3><button data-open="classnote">Classnote · 课堂总结 <span aria-hidden="true">↗</span></button></h3><p>整理课程笔记、管理待办，把注意力还给学习。</p></div><span class="project-index">04</span></div>
+        </article>
+        <article class="project project-wide" data-category="play" data-project="galaxy">
+          <button class="project-visual galaxy-art" data-open="galaxy" aria-label="查看鼠哥星系项目详情"><img src="assets/galaxy.png" alt="鼠哥星系真实网页截图" loading="lazy" onerror="this.hidden=true"><span class="art-fallback" aria-hidden="true"><span class="galaxy-name">SHUGE<br>GALAXY</span><small>一片可以探索的作品星系</small></span></button>
+          <div class="project-info"><div><p class="project-type">EXPERIENCE / 交互艺术</p><h3><button data-open="galaxy">SHUGE GALAXY <span aria-hidden="true">↗</span></button></h3><p>在像素星空里漫游，让每一次跃迁都有新发现。</p></div><span class="project-index">05</span></div>
+        </article>
+        <article class="project project-narrow" data-category="play" data-project="board">
+          <button class="project-visual board-art" data-open="board" aria-label="查看木木金金棋项目详情"><img src="assets/board.png" alt="木木金金棋真实网页截图" loading="lazy" onerror="this.hidden=true"><span class="art-fallback" aria-hidden="true"><span class="board-graphic" aria-hidden="true"></span><span>哦，木木金金棋。</span><small>筑起壁垒，寻找路径。</small></span></button>
+          <div class="project-info"><div><p class="project-type">STRATEGY / 原创棋类</p><h3><button data-open="board">木木金金棋 <span aria-hidden="true">↗</span></button></h3><p>地图工坊、本地对弈，每一步都可能改写棋局。</p></div><span class="project-index">06</span></div>
+        </article>
+      </div>
+      <a class="all-work" href="https://github.com/ndshuge?tab=repositories" target="_blank" rel="noopener noreferrer">还有一些正在发生的想法 <span>在 GitHub 继续探索 ↗</span></a>
+    </section>
+    <section class="playground" id="playground" aria-labelledby="play-title">
+      <div class="wrap play-layout"><div class="play-copy"><p class="label">THE PLAYGROUND</p><h2 id="play-title">给好奇心，<br>留一点空间。</h2><p>一条方程，也可以是一件作品。<br>试着改变参数，看秩序如何从线条中浮现。</p><div class="lab-controls"><label for="frequency">频率比 <output id="frequency-value">3 : 2</output></label><input id="frequency" type="range" min="1" max="9" value="3" step="1"><label for="phase">相位 <output id="phase-value">90°</output></label><input id="phase" type="range" min="0" max="180" value="90" step="1"><div class="lab-actions"><button id="lab-random">换一种可能 <span aria-hidden="true">↗</span></button><button id="lab-save">保存此刻 <span aria-hidden="true">↓</span></button></div></div></div><div class="lab-art"><canvas id="lab-canvas" role="img" aria-label="由频率与相位决定的李萨如曲线">李萨如曲线：横向与纵向的正弦运动叠加而成的闭合图形。</canvas><div class="lab-caption"><span>LISSAJOUS STUDY</span><code id="equation">x = sin(3t + π/2) · y = sin(2t)</code></div></div></div>
+    </section>
+    <section class="about wrap" id="about" aria-labelledby="about-title"><div class="about-left"><div class="mouse-sign" aria-hidden="true"><span class="ear ear-left"></span><span class="ear ear-right"></span><span class="mouse-face"><i></i><i></i><b></b></span></div><p class="label">A HUMAN BEHIND THE SCREEN</p><h2 id="about-title">叫我鼠哥<br>就好<span class="orange">。</span></h2><p class="real-name">蒋松锡 / NDSHUGE</p></div><div class="about-right"><p class="about-lead">喜欢把「这能做吗？」<br>变成「来，试试看。」</p><p>我是鼠哥。我的探索常常从一个很小的问题开始：知识能不能更好玩？AI 能不能真正帮人做事？一个网页，能装下多大的世界？</p><p>所以有了互动学院、浏览器游戏，也有了连接对话与本机工程的 MiceHole。我喜欢亲手把这些想法搭起来，再一点点打磨。</p><div class="principles"><div><span>01</span><p><strong>先做出来</strong>一个能亲手操作的作品，是很好的回答。</p></div><div><span>02</span><p><strong>把过程讲清楚</strong>好作品既值得体验，也经得起追问。</p></div><div><span>03</span><p><strong>继续保持好奇</strong>技术是工具，探索才是一直想做的事。</p></div></div></div></section>
+    <section class="contact wrap" id="contact" aria-labelledby="contact-title"><p>如果你也有个想动手试试的想法。</p><h2 id="contact-title">LET’S MAKE<br>SOMETHING<span class="orange">↗</span></h2><div class="contact-bottom"><p>交流作品、聊聊技术，<br>或者，只是打个招呼。</p><a class="contact-button" href="https://github.com/ndshuge" target="_blank" rel="noopener noreferrer">在 GitHub 找到我 <span aria-hidden="true">↗</span></a><button class="copy-button" id="copy-github">复制 GitHub 地址</button></div></section>
+  </main>
+  <footer class="footer wrap"><a class="wordmark footer-logo" href="#">SHUGE<span class="brand-mark" aria-hidden="true">*</span></a><p>好奇心未完待续。</p><span>© <span id="year">2026</span> 鼠哥</span><button id="theme-toggle" aria-pressed="false" aria-label="切换到深色外观">深色外观 ◐</button><a href="#" aria-label="回到顶部">回到顶部 ↑</a></footer>
+  <dialog id="project-dialog" aria-labelledby="dialog-title"><button class="dialog-close" aria-label="关闭项目详情">关闭 ×</button><div class="dialog-content"><p class="label" id="dialog-category"></p><h2 id="dialog-title"></h2><p id="dialog-description"></p><ul id="dialog-features"></ul><p class="dialog-note" id="dialog-note"></p><div class="dialog-links"><a id="dialog-live" class="contact-button" target="_blank" rel="noopener noreferrer">立即体验 ↗</a><a id="dialog-source" class="text-link" target="_blank" rel="noopener noreferrer">查看源码 ↗</a></div></div></dialog>
+  <div class="toast" id="toast" role="status"></div>
+  <noscript><p class="noscript">动画、筛选与详情需要 JavaScript。你仍然可以通过 <a href="https://github.com/ndshuge">GitHub</a> 探索鼠哥的所有作品。</p></noscript>
+</body>
+</html>

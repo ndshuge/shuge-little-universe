@@ -1,0 +1,55 @@
+/* The readable half of the planet. Routes remain ordinary links. */
+(() => {
+  'use strict';
+  const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
+  const emit = (type, detail = {}) => window.dispatchEvent(new CustomEvent('shuge:' + type, {detail}));
+  let returnFocus, toastTimer, sound = false, audio, paused = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function toast(message) { $('#toast').textContent = message; $('#toast').classList.add('show'); clearTimeout(toastTimer); toastTimer = setTimeout(() => $('#toast').classList.remove('show'), 2700); }
+  const titles = {about:'认识鼠哥', campus:'校园里的我', life:'作品之外', work:'创作馆', lab:'好奇心实验馆', contact:'联系鼠哥'};
+  function accessibility() {const open=!$('#panel').hidden,mobile=matchMedia('(max-width:760px)').matches;$('.welcome').inert=open;$('.scene-tags').inert=open;$('.site-header nav').inert=open&&!mobile;$('.github-top').inert=open;for(const s of ['.district-nav','.world-settings','.camera-controls','#scene'])$(s).inert=open&&mobile;}
+  function route() {
+    const key = location.hash.slice(1), open = !!titles[key];
+    if (open && $('#panel').hidden) returnFocus = document.activeElement;
+    $('#panel').hidden = !open; document.body.classList.toggle('panel-open', open);
+    $$('.page').forEach(p => p.hidden = p.id !== 'page-' + key);
+    $$('nav a').forEach(a => { const active = open && a.hash === '#' + key; a.classList.toggle('active', active); active ? a.setAttribute('aria-current','page') : a.removeAttribute('aria-current'); });
+    accessibility();emit('navigate', {route: open ? key : ''});
+    if (open) { $('#panel-title').textContent = titles[key]; $('#panel-content').scrollTop = 0; const h = $('#page-' + key + ' h2'); h.tabIndex = -1; requestAnimationFrame(() => h.focus({preventScroll:true})); }
+    else if (returnFocus) {const target=returnFocus;returnFocus=null;requestAnimationFrame(()=>{const visible=target.isConnected&&!target.closest('[inert]')&&target.getClientRects().length&&getComputedStyle(target).visibility!=='hidden';(visible?target:$('.logo')).focus({preventScroll:true});});}
+    if (key === 'lab') requestAnimationFrame(drawCurve);
+    note();
+  }
+  window.addEventListener('hashchange', route);
+  $('#panel-close').addEventListener('click', () => location.hash = '');
+  window.addEventListener('keydown', e => { if (e.key === 'Escape' && !$('#panel').hidden) location.hash = ''; });
+  $('#copy-github').addEventListener('click', async () => { try { await navigator.clipboard.writeText('https://github.com/ndshuge'); toast('GitHub 地址已复制'); } catch { toast('地址：https://github.com/ndshuge'); } });
+  $$('[data-copy]').forEach(b=>b.addEventListener('click',async()=>{try{await navigator.clipboard.writeText(b.dataset.copy);toast('联系方式已复制');}catch{toast(b.dataset.copy);}}));
+  const sceneControls=['#ride','#zoom-in','#zoom-out','#reset-view'];let sceneTimer;
+  function sceneState(ready) {clearTimeout(sceneTimer);sceneControls.forEach(s=>$(s).disabled=!ready);$('#scene-loading').hidden=true;$('#render-fallback').hidden=ready;$('.camera-controls').hidden=!ready;$('#ride').hidden=!ready;if(!ready){$('#scene').dataset.ready='fallback';$('#world-caption').textContent='使用导航，直接认识鼠哥。';}}
+  sceneControls.forEach(s=>$(s).disabled=true);
+  window.addEventListener('shuge:scene-ready',()=>sceneState(true));window.addEventListener('shuge:scene-error',()=>sceneState(false));
+  $('#world-module').addEventListener('error',()=>sceneState(false));sceneTimer=setTimeout(()=>{if($('#scene').dataset.ready!=='true')sceneState(false);},8000);
+  $('#explore').addEventListener('click',()=>{if($('#scene').dataset.ready==='true')emit('explore');else location.hash='about';});
+  function note() { if (!sound) return; try { audio ||= new (window.AudioContext || window.webkitAudioContext)(); audio.resume(); const o=audio.createOscillator(), g=audio.createGain(); o.type='sine'; o.frequency.value=440; g.gain.setValueAtTime(.035,audio.currentTime); g.gain.exponentialRampToValueAtTime(.001,audio.currentTime+.3); o.connect(g).connect(audio.destination); o.start(); o.stop(audio.currentTime+.31); } catch { sound=false; $('#sound-toggle').textContent='声音不可用'; } }
+  $('#sound-toggle').addEventListener('click', () => { sound=!sound; $('#sound-toggle').setAttribute('aria-pressed',sound); $('#sound-toggle').textContent=sound?'声音开':'声音关'; note(); });
+  function motion() { $('#motion-toggle').setAttribute('aria-pressed',paused); $('#motion-toggle').textContent=paused?'继续动态':'暂停动态'; document.body.dataset.motion=paused?'paused':'running'; emit('motion',{paused}); }
+  $('#motion-toggle').addEventListener('click',()=>{paused=!paused;motion();}); motion();
+  $('#time-toggle').addEventListener('click',()=>{const day=document.body.dataset.time!=='day';document.body.dataset.time=day?'day':'evening';$('#time-toggle').setAttribute('aria-pressed',day);$('#time-toggle').setAttribute('aria-label',day?'切换到傍晚':'切换到白昼');$('#time-toggle span').textContent=day?'切换傍晚':'切换白昼';$('#time-toggle use').setAttribute('href',day?'#i-moon':'#i-sun');emit('time',{day});note();});
+  const projects = {...window.SHUGE_PROJECTS, shanhe:{title:'山河为证',description:'一部可以探索的历史互动作品，让山河与叙事在浏览器里相遇。',live:'https://ndshuge.github.io/shanhe-preview/',source:'https://github.com/ndshuge/shanhe-preview'}};
+  const cats={micehole:'ai',academy:'learn',classnote:'learn',arcade:'play',galaxy:'play',board:'play',shanhe:'learn'};
+  const link=(url,text)=>{const a=document.createElement('a');a.href=url;a.textContent=text;a.target='_blank';a.rel='noopener noreferrer';return a;};
+  function works(filter='all') { const list=$('#work-list');list.replaceChildren();for(const [id,p] of Object.entries(projects)){if(filter!=='all'&&cats[id]!==filter)continue;const item=document.createElement('article');item.className='work-item';const thumb=link(p.live,'');thumb.className='work-thumb';thumb.setAttribute('aria-label','打开'+p.title);if(id==='micehole'||id==='shanhe'){thumb.classList.add(id==='micehole'?'mice-cover':'shanhe-cover');const strong=document.createElement('strong');strong.textContent=p.title;const sub=document.createElement('span');sub.textContent=id==='micehole'?'MAKE IDEAS HAPPEN':'让历史成为一次探索';thumb.append(strong,sub);}else{const img=document.createElement('img');img.src='assets/'+id+'.png';img.alt=p.title+'页面预览';img.loading='lazy';thumb.append(img);}const title=document.createElement('h3');title.textContent=p.title;const desc=document.createElement('p');desc.textContent=p.description;const actions=document.createElement('div');actions.className='work-links';actions.append(link(p.live,id==='micehole'?'查看发布':'体验作品'),link(p.source,'源码 ↗'));item.append(thumb,title,desc,actions);list.append(item);}$('#work-status').textContent='显示 '+list.children.length+' 件作品'; }
+  $$('[data-filter]').forEach(b=>b.addEventListener('click',()=>{$$('[data-filter]').forEach(x=>x.setAttribute('aria-pressed',x===b));works(b.dataset.filter);}));works();
+  let lab='curve',shape='ring',sculpturePaused=paused,angle=.3;
+  function particlePauseState() {$('#particle-pause').setAttribute('aria-pressed',sculpturePaused);$('#particle-pause').textContent=sculpturePaused?'继续旋转':'暂停旋转';}particlePauseState();window.addEventListener('shuge:motion',e=>{sculpturePaused=e.detail.paused;particlePauseState();});
+  $$('[data-lab]').forEach(b=>b.addEventListener('click',()=>{lab=b.dataset.lab;$$('[data-lab]').forEach(x=>x.setAttribute('aria-pressed',x===b));$('#curve-lab').hidden=lab!=='curve';$('#particle-lab').hidden=lab!=='particles';drawCurve();}));
+  const curve=$('#curve-canvas'), cx=curve.getContext('2d');
+  function fit(canvas) {const w=canvas.clientWidth||380,d=Math.min(devicePixelRatio,2);if(canvas.width!==Math.round(w*d)){canvas.width=Math.round(w*d);canvas.height=Math.round(w*d);}return canvas.width;}
+  function drawCurve() {const w=fit(curve),f=+$('#frequency').value,p=+$('#phase').value;$('#frequency-value').textContent=f+' : 2';$('#phase-value').textContent=p+'°';cx.fillStyle='#20382f';cx.fillRect(0,0,w,w);cx.strokeStyle='#466252';cx.lineWidth=1;for(let i=1;i<8;i++){cx.beginPath();cx.moveTo(w*i/8,0);cx.lineTo(w*i/8,w);cx.moveTo(0,w*i/8);cx.lineTo(w,w*i/8);cx.stroke();}const grad=cx.createLinearGradient(0,0,w,w);grad.addColorStop(0,'#a5c9a2');grad.addColorStop(.5,'#f3c797');grad.addColorStop(1,'#f09873');cx.strokeStyle=grad;cx.lineWidth=w/210;cx.beginPath();for(let i=0;i<=2400;i++){const t=i/2400*Math.PI*2,x=w/2+Math.sin(f*t+p/180*Math.PI)*w*.39,y=w/2+Math.sin(2*t)*w*.39;i?cx.lineTo(x,y):cx.moveTo(x,y);}cx.stroke();}
+  ['#frequency','#phase'].forEach(s=>$(s).addEventListener('input',drawCurve));$('#lab-random').addEventListener('click',()=>{$('#frequency').value=(+$('#frequency').value+2)%9+1;$('#phase').value=Math.floor(Math.random()*181);drawCurve();});
+  $('#lab-save').addEventListener('click',()=>{drawCurve();curve.toBlob(blob=>{if(!blob)return;const a=document.createElement('a'),url=URL.createObjectURL(blob);a.href=url;a.download='鼠哥的好奇心曲线.png';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);toast('曲线已保存为 PNG');});});
+  $$('[data-shape]').forEach(b=>b.addEventListener('click',()=>{shape=b.dataset.shape;$$('[data-shape]').forEach(x=>x.setAttribute('aria-pressed',x===b));}));$('#particle-pause').addEventListener('click',()=>{sculpturePaused=!sculpturePaused;particlePauseState();});
+  const pc=$('#particle-canvas'),px=pc.getContext('2d');pc.addEventListener('keydown',e=>{if(e.key==='ArrowLeft'||e.key==='ArrowRight'){e.preventDefault();angle+=e.key==='ArrowRight'?.15:-.15;}});
+  let last=0,particleState='';function particles(t){requestAnimationFrame(particles);if(document.hidden||lab!=='particles'||location.hash!=='#lab')return;const dt=Math.min((t-last)/1000,.05);last=t;if(!sculpturePaused)angle+=dt*.2;const state=shape+':'+angle.toFixed(5)+':'+pc.clientWidth;if(state===particleState)return;particleState=state;const w=fit(pc);px.fillStyle='#20382f';px.fillRect(0,0,w,w);const points=[];for(let i=0;i<1000;i++){let x,y,z;const u=i/1000*Math.PI*2,v=i*2.39996;if(shape==='knot'){const r=1+.32*Math.cos(3*u);x=r*Math.cos(2*u);y=r*Math.sin(2*u);z=.4*Math.sin(3*u);}else if(shape==='mouse'){const part=i%3,phi=v,theta=Math.acos(1-2*((i*.618)%1)),r=part===0?.67:.36,off=part===0?0:part===1?-.51:.51;x=r*Math.sin(theta)*Math.cos(phi)+off;y=r*Math.cos(theta)+(part===0?-.13:.55);z=r*Math.sin(theta)*Math.sin(phi)*.6;}else{x=(1+.2*Math.cos(v))*Math.cos(u);y=.2*Math.sin(v);z=(1+.2*Math.cos(v))*Math.sin(u);}const rx=x*Math.cos(angle)+z*Math.sin(angle),rz=z*Math.cos(angle)-x*Math.sin(angle),scale=w*.32/(1+rz*.12);points.push({x:w/2+rx*scale,y:w/2-y*scale+rz*scale*.2,z:rz});}points.sort((a,b)=>a.z-b.z);for(const p of points){px.fillStyle=p.z>0?'#f3b583':'#91b497';px.globalAlpha=.35+(p.z+1.4)/3.2*.65;px.beginPath();px.arc(p.x,p.y,w/370*(1+(p.z+1.4)*.2),0,Math.PI*2);px.fill();}px.globalAlpha=1;}
+  requestAnimationFrame(particles);window.addEventListener('resize',()=>{accessibility();if(location.hash==='#lab')drawCurve();});route();if($('#scene').dataset.ready==='true')sceneState(true);
+})();

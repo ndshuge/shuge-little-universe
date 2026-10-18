@@ -1,0 +1,19 @@
+{
+  "scope": "CPU only: actual Three scene geometry and controls with a stub renderer. No GPU/browser/visual acceptance.",
+  "passed": 10,
+  "failed": 0,
+  "meshCount": 367,
+  "vertices": 42442,
+  "checks": [
+    "Scene initializes",
+    "Finite geometry and transforms",
+    "Geometry budget",
+    "Zoom changes distance",
+    "Reset restores distance",
+    "Keyboard rotates world",
+    "Day and pause events accepted",
+    "Paused stable scene stops rendering",
+    "Light changes redraw paused scene",
+    "Unsupported WebGL announces readable fallback"
+  ]
+}

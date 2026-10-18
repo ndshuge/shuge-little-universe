@@ -1,0 +1,10 @@
+/* Verified against the owner's public GitHub and linked project pages, 2026-10-17.
+   Edit this file to maintain project descriptions and destinations. */
+window.SHUGE_PROJECTS = {
+  micehole: {title:'MiceHole',category:'AI ENGINEERING / 开源工具',description:'通过自托管 Windows MCP 工具，把 ChatGPT 对话连接到本机工程。从读取文件、修改代码，到运行命令与检查真实结果。',features:['自托管 Windows MCP 工具桥','文件、命令、Git、浏览器与工程验证','源码、安装说明和版本发布公开可查'],note:'独立开源社区项目。高权限使用需由电脑主人明确授权；完整跨设备适用性以仓库验收说明为准。',live:'https://github.com/ndshuge/micehole/releases',source:'https://github.com/ndshuge/micehole',liveLabel:'查看发布版本 ↗'},
+  academy: {title:'鼠哥学院',category:'LEARNING / 互动知识',description:'把知识从静态文字变成可以探索的体验。微积分、Python、C 语言、芯片与大学物理，从讲解、题目和可操作页面中学习。',features:['五个主题学院的统一入口','互动知识页面与课程练习','源码开放，持续迭代'],note:'公开学习门户。具体课程、登录与进度功能以各学院当前页面为准。',live:'https://ndshuge.github.io/ndshuge-academy/',source:'https://github.com/ndshuge/ndshuge-academy'},
+  arcade: {title:'鼠哥游戏厅',category:'PLAY / 浏览器游戏',description:'一个浏览器里的游乐场。像素生存、物理沙盒与动作实验，被收进同一片可探索的游戏世界。',features:['无需安装，从网页进入游戏','包含 LUMEN SIEGE 光核围城等作品','不同游戏保留各自的操作与规则'],note:'游戏支持与设备表现以每款作品说明为准；部分页面建议横屏体验。',live:'https://ndshuge.github.io/ndshuge-game/',source:'https://github.com/ndshuge/ndshuge-game'},
+  classnote: {title:'Classnote · 课堂总结',category:'UTILITY / 学习工具',description:'把课程记录整理成结构化笔记。手动管理课程、日历回看、待办与导出备份，也可以自行配置 AI 服务进行总结。',features:['课程笔记、待办与日历回看','支持笔记导出备份','AI 总结为可选功能，需自行配置服务'],note:'游客数据保存在本机浏览器。AI 总结与账号同步的具体数据说明请阅读工具内的使用说明。',live:'https://ndshuge.github.io/ndshuge-classnote/',source:'https://github.com/ndshuge/ndshuge-classnote'},
+  galaxy: {title:'SHUGE GALAXY',category:'EXPERIENCE / 交互艺术',description:'鼠哥作品的交互式星系入口。在像素星空里漫游，通过星系跃迁和键盘终端，发现分布其中的项目与数字艺术实验。',features:['像素星空与项目跃迁','键盘终端与星图探索','作品的另一种打开方式'],note:'建议在支持 Canvas 的现代浏览器中体验。',live:'https://ndshuge.github.io/ndshuge-galaxy/',source:'https://github.com/ndshuge/ndshuge-galaxy'},
+  board: {title:'哦，木木金金棋',category:'STRATEGY / 原创棋类',description:'筑起壁垒，寻找路径。带有地图工坊与本地 AI 对手的原创策略棋，每一步都可能改写棋局。',features:['本地 AI 对弈与原创棋局规则','地图工坊：编辑障碍与试玩地图','保存地图与生成分享链接'],note:'本地棋类游戏与训练实验的能力边界以项目说明为准。',live:'https://ndshuge.github.io/oh-mumujinjin/',source:'https://github.com/ndshuge/oh-mumujinjin'}
+};
