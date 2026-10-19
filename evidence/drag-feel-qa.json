@@ -1,0 +1,92 @@
+{
+  "time": "2026-10-19T02:58:34.096Z",
+  "url": "http://127.0.0.1:5206/",
+  "method": "real CDP dispatchTouchEvent in emulated-mobile Edge; not physical iPhone Safari",
+  "passed": 11,
+  "failed": 0,
+  "results": [
+    {
+      "name": "direction left stays responsive",
+      "pass": true,
+      "details": {
+        "dyaw": -1.2,
+        "dpitch": 0,
+        "scroll": 0
+      }
+    },
+    {
+      "name": "direction right stays responsive",
+      "pass": true,
+      "details": {
+        "dyaw": 1.201,
+        "dpitch": 0,
+        "scroll": 0
+      }
+    },
+    {
+      "name": "direction up stays responsive",
+      "pass": true,
+      "details": {
+        "dyaw": -0.001,
+        "dpitch": -1.2,
+        "scroll": 0
+      }
+    },
+    {
+      "name": "direction down stays responsive",
+      "pass": true,
+      "details": {
+        "dyaw": 0,
+        "dpitch": 1.201,
+        "scroll": 0
+      }
+    },
+    {
+      "name": "direction diagonal stays responsive",
+      "pass": true,
+      "details": {
+        "dyaw": 1.02,
+        "dpitch": -1.021,
+        "scroll": 0
+      }
+    },
+    {
+      "name": "middle of canvas accepts touch instead of leaking scroll",
+      "pass": true,
+      "details": {
+        "dyaw": 0.839,
+        "dpitch": 0.661
+      }
+    },
+    {
+      "name": "quick 25px touch immediately updates planet, not delayed ease",
+      "pass": true,
+      "details": {
+        "yaw": 0.299,
+        "pitch": 0.299
+      }
+    },
+    {
+      "name": "vertical swipes can rotate well beyond previous tilt clamp",
+      "pass": true,
+      "details": {
+        "deltaPitch": 4.5
+      }
+    },
+    {
+      "name": "normal content panel still accepts touch scroll",
+      "pass": true,
+      "details": 225
+    },
+    {
+      "name": "hotspot remains tappable when not dragging",
+      "pass": true,
+      "details": "#work"
+    },
+    {
+      "name": "no page JS error",
+      "pass": true,
+      "details": "0 errors"
+    }
+  ]
+}
