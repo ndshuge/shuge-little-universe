@@ -9,5 +9,7 @@ node_modules/
 *.zip
 *.tar.gz
 .DS_Store
+work/
 evidence/live-github-pages-desktop.png
 evidence/live-warm-desktop.png
+evidence/live-before-*.png

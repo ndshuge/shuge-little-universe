@@ -1,0 +1,79 @@
+{
+  "date": "2026-10-19T02:00:29.156Z",
+  "target": "http://127.0.0.1:5206/",
+  "scope": "Emulated mobile touchscreen in Windows Edge / real pointer input, not hardware Safari",
+  "passed": 7,
+  "failed": 0,
+  "reports": [
+    {
+      "name": "star touch-action disables vertical browser pan",
+      "pass": true,
+      "data": "none"
+    },
+    {
+      "name": "one-finger diagonal planet drag rotates without page scrolling",
+      "pass": true,
+      "data": {
+        "before": {
+          "scrollY": 0,
+          "rot": 0.12
+        },
+        "after": {
+          "scrollY": 0,
+          "rot": 0.534
+        }
+      }
+    },
+    {
+      "name": "restored dense 4200-particle renderer",
+      "pass": true,
+      "data": {
+        "count": "4200",
+        "width": 676,
+        "height": 676
+      }
+    },
+    {
+      "name": "mouse, knot and ring render 4200 points each",
+      "pass": true,
+      "data": [
+        {
+          "shape": "ring",
+          "points": "4200"
+        },
+        {
+          "shape": "knot",
+          "points": "4200"
+        },
+        {
+          "shape": "mouse",
+          "points": "4200"
+        }
+      ]
+    },
+    {
+      "name": "touch rotates particle sculpture without scrolling its panel",
+      "pass": true,
+      "data": {
+        "before": {
+          "panel": 0,
+          "rot": 0.507
+        },
+        "after": {
+          "panel": 0,
+          "rot": 1.399
+        }
+      }
+    },
+    {
+      "name": "normal content panel still scrolls by touch",
+      "pass": true,
+      "data": 317
+    },
+    {
+      "name": "no Javascript exceptions",
+      "pass": true,
+      "data": "no exceptions"
+    }
+  ]
+}
