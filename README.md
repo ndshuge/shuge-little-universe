@@ -21,7 +21,7 @@
 
 根据真实 iPhone 使用反馈修复方向性迟滞：原实现左右/上下灵敏度不同（0.006 / 0.003 rad/px），俯仰角被限制为 ±0.35 rad，且拖动时仍按慢速 easing 追赶触摸位置。新版在按住时直接跟手，以相同的触摸系数 0.012 rad/px 响应左右和上下，取消俯仰死角；松手后保留平滑过渡。重构了星球的触摸命中层级，并允许从浮动「创作馆」等标签上直接开始拖动，同时轻点标签仍可导航；移动端阴影图降至 1024²、像素比上限调整为 1.5 以减轻 GPU 负担。粒子实验及普通页面滑动互不影响。
 
-测试：`node scripts/check-drag-feel.cjs`，通过 Edge 移动触摸仿真验收上下左右、斜向、短距离快拖、连续超一圈的纵向旋转、浮动标签起点、点击标签以及内容面板滑动。验收数据为 `evidence/drag-feel-qa.json`。模拟不能代替用户真实 iPhone Safari 的手感验收。
+测试：`node scripts/check-drag-feel.cjs`，通过 Edge 移动触摸仿真验收上下左右、斜向、短距离快拖、连续超一圈的纵向旋转、浮动标签起点、点击标签以及内容面板滑动。在正式 GitHub Pages 地址复验 **11/11 通过**，验收数据为 `evidence/drag-feel-qa.json`，对应 Pages 发布记录为 [39192692979](https://github.com/ndshuge/shuge-little-universe/actions/runs/39192692979)。模拟不能代替用户真实 iPhone Safari 的手感验收。
 
 ## 架构
 
